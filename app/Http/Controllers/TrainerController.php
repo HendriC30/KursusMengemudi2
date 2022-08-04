@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Trainer;
 use Illuminate\Http\Request;
 
 class TrainerController extends Controller
@@ -13,7 +14,8 @@ class TrainerController extends Controller
      */
     public function index()
     {
-        //
+        $Trainer = Trainer::all();
+        return view('Trainer.index',compact(['Trainer']));
     }
 
     /**
@@ -23,7 +25,7 @@ class TrainerController extends Controller
      */
     public function create()
     {
-        //
+        return view('Trainer.Create');
     }
 
     /**
@@ -34,7 +36,8 @@ class TrainerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $Trainer::create($request->except(['_token','submit']));
+        return redirect('/Trainer');
     }
 
     /**
@@ -56,7 +59,8 @@ class TrainerController extends Controller
      */
     public function edit($id)
     {
-        //
+        $Trainer = Trainer::find($id);
+        return view('Trainer.edit',compact(['Trainer']));
     }
 
     /**
@@ -66,9 +70,11 @@ class TrainerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update($id, Request $request)
     {
-        //
+        $Trainer = Trainer::find($id);
+        $Trainer->update($request->except(['_token','submit']));
+        return redirect('/Trainer');
     }
 
     /**
@@ -79,6 +85,8 @@ class TrainerController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $Trainer = Trainer::find($id);
+        $Trainer->delete();
+        return redirect('/Trainer');
     }
 }
